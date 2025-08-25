@@ -1,0 +1,68 @@
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/arm64/configs/(CHANGEME!)
+
+pkgname=linux-lenovo-tb-x304l
+pkgver=3.18.140
+pkgrel=0
+pkgdesc="Lenovo TAB4 10 kernel fork"
+arch="aarch64"
+_carch="arm64"
+_flavor="lenovo-tb-x304l"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+	gcc6
+"
+
+if [ "${CC:0:5}" != "gcc6-" ]; then
+	CC="gcc6-$CC"
+	HOSTCC="gcc6-gcc"
+	CROSS_COMPILE="gcc6-$CROSS_COMPILE"
+fi
+
+
+
+# Source
+_repository="android_kernel_lenovo_msm8953"
+_commit="88da139fc53ea909e2cbc27cfc4cef331718d7e3"
+_config="config-$_flavor.$arch"
+source="
+	$pkgname-$_commit.tar.gz::https://github.com/ahi6/$_repository/archive/$_commit.tar.gz
+	$_config
+	gcc10-extern_YYLOC_global_declaration.patch
+	linux3.7to4.5-ARM64-remove-Sun-Solaris-style-flag-on-section.patch
+"
+builddir="$srcdir/$_repository-$_commit"
+_outdir="out"
+
+prepare() {
+	default_prepare
+	. downstreamkernel_prepare
+}
+
+build() {
+	unset LDFLAGS
+	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+}
+
+package() {
+	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" \
+		"$_flavor" "$_outdir"
+}
+
+sha512sums="
+6dd31c9b31ba22120e947dc5a71d9a4753117d66ea8c9b9dc9070fa81a95f7d604dc3171904030fe0de2dc24a000d41b95ffb31d2437b11ef328c9a925e80c3f  linux-lenovo-tb-x304l-88da139fc53ea909e2cbc27cfc4cef331718d7e3.tar.gz
+2729aa2b4b8d5d6e3e9b6e7e2aaa4a9eef6cdce9ea990506d8a278eac6e13a7cc98ca0e986bd8b4cd245aca2651cb5bbd958b636078e2793cca1a3ca1cdf40e6  config-lenovo-tb-x304l.aarch64
+2b48f1bf0e3f70703d2cdafc47d5e615cc7c56c70bec56b2e3297d3fa4a7a1321d649a8679614553dde8fe52ff1051dae38d5990e3744c9ca986d92187dcdbeb  gcc10-extern_YYLOC_global_declaration.patch
+75545ccd0082a119b9ad95fcef3523c939a5c946f8f3a5c3dde15cee1502f6c1011050a0ad5359426f018bb7ceea1c97a28c7665941bc89f365c8d11065ce0f6  linux3.7to4.5-ARM64-remove-Sun-Solaris-style-flag-on-section.patch
+"
