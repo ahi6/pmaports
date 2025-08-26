@@ -3,7 +3,7 @@
 # scripts.
 
 deviceinfo_format_version="0"
-deviceinfo_name="Lenovo TAB4 10"
+deviceinfo_name="Lenovo Tab 4 10"
 deviceinfo_manufacturer="Lenovo"
 deviceinfo_codename="lenovo-tb-x304l"
 deviceinfo_year="2017"
@@ -16,7 +16,7 @@ deviceinfo_external_storage="true"
 
 # Bootloader related
 deviceinfo_flash_method="fastboot"
-deviceinfo_kernel_cmdline="console=null androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci loop.max_part=7 buildvariant=userdebug"
+deviceinfo_kernel_cmdline="console=null pmos.debug-shell androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci loop.max_part=7 buildvariant=userdebug"
 deviceinfo_generate_bootimg="true"
 deviceinfo_flash_pagesize="2048"
 deviceinfo_header_version="0"
