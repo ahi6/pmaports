@@ -11,6 +11,7 @@ depends="
 	linux-lenovo-tb-x304l
 	mkbootimg
 	postmarketos-base
+	postmarketos-base-downstream
 	mdss-fb-init-hack
 "
 makedepends="devicepkg-dev"
@@ -28,6 +29,6 @@ package() {
 }
 
 sha512sums="
-c8cb6f8053913472438e5a276be768f95f24f5ebd28614ebaf863d2691a6432f5103b778aac5d4e7194fed8a2e6af9f770f6593e50229cb89a75b11c08d9548d  deviceinfo
+8eea96a864de004301f6de95a92de3dedcd8c2ca4050e5bee47ee0df94f5d6a43f830f32330e858a5c4a397d1180812479ccb23c914179ba2b5d0ccafbcdcb4e  deviceinfo
 e70bae17df23dcaaaea0e2d3616556f04baa23f8ee1357785c0f539bf97282d8ddff53953e155b72689bb73beb38c2da3d08de2a61e866684edfa10a6593885d  modules-initfs
 "
